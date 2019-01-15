@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class PostsService {
-
     private posts: Post[] = [];
     private postsUpdated = new Subject<Post[]>();
     getPosts() {

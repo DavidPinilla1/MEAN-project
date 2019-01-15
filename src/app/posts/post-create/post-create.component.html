@@ -6,6 +6,7 @@
         type="text"
         name="title"
         ngModel
+        placeholder="Enter the title here"
         #title="ngModel"
         required/>
         <mat-error *ngIf="title.invalid">Enter a title</mat-error>
@@ -16,6 +17,7 @@
         matInput 
         name="content"
         ngModel
+        placeholder="Enter the content here"
         #content="ngModel"
         required></textarea>
         <mat-error *ngIf="content.invalid">Enter the content</mat-error>
