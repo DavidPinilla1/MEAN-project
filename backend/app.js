@@ -1,12 +1,22 @@
 const express = require('express');
-
+const bodyParser=require('body-parser');
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.use('/api/posts',(req, res, next) => {
+app.post('/api/posts', (req,res,next)=>{
+    const posts=req.body;
+    console.log(posts);
+    res.status(201).json({
+        message:'Post added'
+    })
+});
+app.get('/api/posts',(req, res, next) => {
     const posts=[
         {id:'sa4d80',
         title:'titulo',
