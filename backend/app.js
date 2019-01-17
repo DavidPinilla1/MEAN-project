@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser=require('body-parser');
 const app = express();
 
+const post=require('./models/post')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use((req,res,next)=>{
@@ -9,6 +10,7 @@ app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+//7WQdm1J5nT70MmfU  //password Metroid_300
 app.post('/api/posts', (req,res,next)=>{
     const posts=req.body;
     console.log(posts);
