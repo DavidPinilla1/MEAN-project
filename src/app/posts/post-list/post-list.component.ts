@@ -19,6 +19,9 @@ this.postsService.getPosts();
         this.posts = posts;
       });
   }
+  onDelete(postId:String){
+    this.postsService.deletePost(postId)
+  }
   ngOnDestroy() {
     this.postsSub.unsubscribe();
   }
