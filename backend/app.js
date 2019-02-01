@@ -1,12 +1,10 @@
 const express = require('express');
 const bodyParser=require('body-parser');
 const mongoose=require('mongoose')
+const postsRoutes=require('./routes/posts')
 const app = express();
-
 mongoose.connect('mongodb+srv://Metroid_300:7WQdm1J5nT70MmfU@cluster0-k37ax.mongodb.net/mean?retryWrites=true',{ useNewUrlParser: true })
     .then(()=>console.log('Connected to database')).catch(()=>console.log('Connection failed!:('))
-
-const Post=require('./models/post');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -18,36 +16,7 @@ app.use(function(req, res, next) {
      "GET, POST, PATCH,PUT, DELETE, OPTIONS");
     next();
   });
-app.post('/api/posts', (req,res,next)=>{
-    const post=new Post({
-        title:req.body.title,
-        content:req.body.content
-    })
-    post.save().then(doc=>res.status(201).json({
-        message:'Post added',
-        postId:doc._id
-    }));
-    
-});
-app.put('/api/posts/:id',(req,res,next)=>{
-    const post=new Post({
-        _id:req.body.id,
-        title:req.body.title,
-        content:req.body.content
-    })
-    Post.updateOne({_id: req.params.id},post).then((err,doc)=>{
-        if(err) console.log(err)
-        res.status(200).json(doc)
-    })
-})
-app.get('/api/posts',(req, res) => {
-    Post.find()
-    .then(doc=>
-        res.status(200).json({message:'posts from the server',posts:doc}));
-})
-app.delete('/api/posts/:id',(req,res)=>{
-    Post.deleteOne({_id:req.params.id}).then(res=>console.log('deleted'))
-    res.status(200).json({message:'post deleted'})
-    
-})
+
+  app.use('/api/posts',postsRoutes);
+
 module.exports = app;

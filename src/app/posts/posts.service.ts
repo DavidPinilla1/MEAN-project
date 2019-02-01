@@ -28,7 +28,7 @@ export class PostsService {
             })
     }
     getPost(id:string){
-        return {...this.posts.find(post=>post.id===id)};
+        return this.http.get<{_id:string,title:string,content:string}>('http://localhost:3000/api/posts/'+id);
     }
 
     getPostUpdateListener() {
@@ -46,7 +46,11 @@ export class PostsService {
     updatePost(id:string,title:string,content:string){
         const post:Post={id:id,title:title,content:content}
         this.http.put('http://localhost:3000/api/posts/'+id,post).subscribe(res=>{
-            console.log(res);
+            const updatedPosts=[...this.posts];
+            const oldPostIndex=updatedPosts.findIndex(post=>post.id===post.id);
+            updatedPosts[oldPostIndex]=post;
+            this.posts=updatedPosts;
+            this.postsUpdated.next([...this.posts]);
         })
     }
     deletePost(postId){
