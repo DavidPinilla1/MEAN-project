@@ -20,8 +20,7 @@ router.put('/:id',(req,res,next)=>{
         title:req.body.title,
         content:req.body.content
     })
-    Post.updateOne({_id: req.params.id},post).then((err,doc)=>{
-        if(err) console.log(err)
+    Post.updateOne({_id: req.params.id},post).then((doc)=>{
         res.status(200).json(doc)
     })
 })
